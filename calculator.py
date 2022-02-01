@@ -1,6 +1,36 @@
 from tkinter import *
 from tkinter import messagebox as mb
 
+
+#========================================================= Classes
+class numButton:
+    def __init__(self, number):
+        self.number = number
+
+    def call(self):
+        if answer_status == False:
+            if operation == False:
+                global n, m
+                n += self.number
+                results.config(text=n)
+            else:
+                m += self.number
+                results2.config(text=m)
+        else:
+            pass
+
+button1 = numButton('1')
+button2 = numButton('2')
+button3 = numButton('3')
+button4 = numButton('4')
+button5 = numButton('5')
+button6 = numButton('6')
+button7 = numButton('7')
+button8 = numButton('8')
+button9 = numButton('9')
+button0 = numButton('0')
+buttondot = numButton('.')
+#================================================================
 window = Tk()
 window.title('Calculator')
 window.geometry('300x400+1000+200')
@@ -8,8 +38,10 @@ window.minsize(297, 505)
 window.maxsize(297, 505)
 # menus
 def about():
-    mb.showinfo('About This Calculator', 'This calculator was writter by\
+    mb.showinfo('About This Calculator', 'This calculator was written by\
                  \"Ali J Rad\" using Python 3.8.8')
+
+
 menubar = Menu(window)
 filemenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Check me out!', menu=filemenu)
@@ -46,6 +78,13 @@ final.pack()
 #frame2 for buttons
 frame2 = Frame(window, bg='#dbd2f9', bd=0, )
 frame2.pack(side='bottom', fill=BOTH,)
+
+
+
+
+
+
+
 # =============> constants
 
 n = ''
@@ -53,139 +92,6 @@ operation = False
 answer_status = False
 operator = ''
 m = ''
-
-# =============> number functions
-def _1_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '1'
-            results.config(text=n)
-        else:
-            m += '1'
-            results2.config(text=m)
-    else:
-        pass
-
-def _2_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '2'
-            results.config(text=n)
-        else:
-            m += '2'
-            results2.config(text=m)
-    else:
-        pass
-
-def _3_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '3'
-            results.config(text=n)
-        else:
-            m += '3'
-            results2.config(text=m)
-    else:
-        pass
-
-def _4_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '4'
-            results.config(text=n)
-        else:
-            m += '4'
-            results2.config(text=m)
-    else:
-        pass
-
-def _5_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '5'
-            results.config(text=n)
-        else:
-            m += '5'
-            results2.config(text=m)
-    else:
-        pass
-
-def _6_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '6'
-            results.config(text=n)
-        else:
-            m += '6'
-            results2.config(text=m)
-    else:
-        pass
-
-def _7_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '7'
-            results.config(text=n)
-        else:
-            m += '7'
-            results2.config(text=m)
-    else:
-        pass
-
-def _8_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '8'
-            results.config(text=n)
-        else:
-            m += '8'
-            results2.config(text=m)
-    else:
-        pass
-
-def _9_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '9'
-            results.config(text=n)
-        else:
-            m += '9'
-            results2.config(text=m)
-    else:
-        pass
-
-def _0_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '0'
-            results.config(text=n)
-        else:
-            m += '0'
-            results2.config(text=m)
-    else:
-        pass
-
-def _dot_push():
-    if answer_status == False:
-        if operation == False:
-            global n, m
-            n += '.'
-            results.config(text=n)
-        else:
-            m += '.'
-            results2.config(text=m)
-    else:
-        pass
 
 # =============> operation functions
 def _ac_push():
@@ -201,6 +107,7 @@ def _ac_push():
     sign.config(text=operator)
     final.config(text=answer)
 def _del_push():
+    global answer
     if answer_status == False:
         if operation == False:
             global n, m
@@ -212,8 +119,13 @@ def _del_push():
         else:
             m = m[:-1]
             results2.config(text=m)
-    else:
-        pass
+    elif answer_status == True:
+        if answer == int(answer):
+            answer = str(int(answer))[:-1]
+            final.config(text=answer)
+        else:
+            answer = str(answer)[:-1]
+            final.config(text=answer)
 def _plus_push():
     global operation, operator
     if n!='':
@@ -269,8 +181,10 @@ def _m_push():
                 n = last_answer
                 if n == int(n):
                     results.config(text=str(int(n)))
+                    n = str(int(n))  # to be able to del the number
                 else:
-                    results.config(text=n)
+                    results.config(text=str(n))
+                    n = str(n)
             else:
                 pass
         elif operation == True:
@@ -278,8 +192,10 @@ def _m_push():
                 m = last_answer
                 if m == int(m):
                     results2.config(text=str(int(m)))
+                    m = str(int(m))
                 else:
-                    results2.config(text=m)
+                    results2.config(text=str(m))
+                    m = str(m)
             else:
                 pass
 def _neg_push():
@@ -346,47 +262,47 @@ def _equ_push():
         pass
 # ==========================>> buttons
 
-b7 = Button(frame2, text = '7', fg='#8533ff', command=_7_push, \
+b7 = Button(frame2, text = '7', fg='#8533ff', command=button7.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b7.grid(row=1, column=0)
 
-b8 = Button(frame2, text = '8', fg='#8533ff', command=_8_push, \
+b8 = Button(frame2, text = '8', fg='#8533ff', command=button8.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b8.grid(row=1, column=1)
 
-b9 = Button(frame2, text = '9', fg='#8533ff', command=_9_push, \
+b9 = Button(frame2, text = '9', fg='#8533ff', command=button9.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b9.grid(row=1, column=2)
 
-b4 = Button(frame2, text = '4', fg='#8533ff', command=_4_push, \
+b4 = Button(frame2, text = '4', fg='#8533ff', command=button4.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b4.grid(row=2, column=0)
 
-b5 = Button(frame2, text = '5', fg='#8533ff', command=_5_push, \
+b5 = Button(frame2, text = '5', fg='#8533ff', command=button5.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b5.grid(row=2, column=1)
 
-b6 = Button(frame2, text = '6', fg='#8533ff', command=_6_push, \
+b6 = Button(frame2, text = '6', fg='#8533ff', command=button6.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b6.grid(row=2, column=2)
 
-b1 = Button(frame2, text = '1', fg='#8533ff', command=_1_push, \
+b1 = Button(frame2, text = '1', fg='#8533ff', command=button1.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b1.grid(row=3, column=0)
 
-b2 = Button(frame2, text = '2', fg='#8533ff', command=_2_push, \
+b2 = Button(frame2, text = '2', fg='#8533ff', command=button2.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b2.grid(row=3, column=1)
 
-b3 = Button(frame2, text = '3', fg='#8533ff', command=_3_push, \
+b3 = Button(frame2, text = '3', fg='#8533ff', command=button3.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b3.grid(row=3, column=2)
 
-b_dot = Button(frame2, text = '.', fg='#8533ff', command=_dot_push, \
+b_dot = Button(frame2, text = '.', fg='#8533ff', command=buttondot.call, \
      relief="groove",padx=17, pady=10, font='arial 20', bg='#dbd2f9')
 b_dot.grid(row=4, column=0)
 
-b0 = Button(frame2, text = '0', fg='#8533ff', command=_0_push, \
+b0 = Button(frame2, text = '0', fg='#8533ff', command=button0.call, \
      relief="groove",padx=14, pady=10, font='arial 20', bg='#dbd2f9')
 b0.grid(row=4, column=1)
 
